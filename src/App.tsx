@@ -13,8 +13,8 @@ interface Post {
   "body": string,
 }
 
-async function getPosts(page:number=0) {
-  const response = await fetch(POSTS_URL + "?page="+page);
+async function getPosts(page: number = 0) {
+  const response = await fetch(POSTS_URL + "?page=" + page);
   const postsData: Post[] = await response.json();
   return postsData;
 }
@@ -26,9 +26,9 @@ function App() {
   const [error, setError] = useState<any>();
   const [page, setPage] = useState(0);
 
-function handleNextPage(){
-  setPage((oldPage)=>oldPage +1);
-}
+  function handleNextPage() {
+    setPage((oldPage) => oldPage + 1);
+  }
 
 
   useEffect(() => {
@@ -53,21 +53,23 @@ function handleNextPage(){
     )
   }
 
-  if (loading) {
-    return <div> Yükleniyor...</div>
-  }
 
   return (
     <>
       <h1>React Apı Bağlama</h1>
       <div><button onClick={handleNextPage}>Sonraki sayfa</button></div>
-      {posts.map((post) => (
-        <li key={post.id}>
-          <div style={{ backgroundColor: "gold", color: "black" }}>{post.title}</div>
-          <div>{post.body}</div></li>
-      ))}
+      {loading ? (<div> Yükleniyor...</div>
+      ) : (
+        posts.map((post) => (
+          <li key={post.id}>
+            <div style={{ backgroundColor: "gold", color: "black" }}>{post.title}</div>
+            <div>{post.body}</div>
+          </li>
+        ))
+      )}
     </>
-  )
+  );
 }
 
-export default App;
+
+  export default App;
